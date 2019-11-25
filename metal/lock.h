@@ -8,6 +8,9 @@
 #include <metal/machine.h>
 #include <metal/memory.h>
 
+#ifdef __ICCRISCV__
+#define __asm__ asm
+#endif
 /*!
  * @file lock.h
  * @brief An API for creating and using a software lock/mutex
