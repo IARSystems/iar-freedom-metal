@@ -7,6 +7,11 @@
 /*! @file interrupt.h
  *  @brief API for registering and manipulating interrupts
  */
+#ifdef __ICCRISCV__
+#ifndef interrupt
+#define interrupt _Pragma("type_attribute=__interrupt")
+#endif
+#endif
 
 #include <stddef.h>
 
@@ -587,4 +592,12 @@ metal_interrupt_affinity_get_threshold(struct metal_interrupt *controller,
     return controller->vtable->interrupt_affinity_get_threshold(controller,
                                                                 context_id);
 }
+
+#ifdef __ICCRISCV__
+#ifdef interrupt
+#undef interrupt
+#endif
+#endif
+
+
 #endif
