@@ -137,8 +137,15 @@ __register_frame_info:
       MODULE  ?metal_enter
 
       PUBLIC  __metal_enter
+      PUBWEAK __iar_metal_helper
+      EXTERN  __iar_metal_dummy
 
       SECTION CSTACK:DATA:NOROOT(2)
+
+      SECTION `.text`:CODE:NOROOT(2)
+__iar_metal_helper:
+      DATA32
+      DC32    __iar_metal_dummy
 
       SECTION `.text.metal.init.enter`:CODE:NOROOT(2)
       CODE
@@ -155,8 +162,6 @@ __register_frame_info:
  * feature we provide the '.text.metal.init.enter' section, which is
  * defined to have the first address being where execution should start. */
 __metal_enter:
-
-
 
     /* Inform the debugger that there is nowhere to backtrace past __metal_enter. */
         cfi ?RET Undefined
@@ -235,10 +240,10 @@ l3:
         CfiBlk 2,early_trap_vector
  
 early_trap_vector:
-    csrr t0, mcause
-    csrr t1, mepc
-    csrr t2, mtval
-    j early_trap_vector
+        csrr t0, mcause
+        csrr t1, mepc
+        csrr t2, mtval
+        j early_trap_vector
         CfiEnd  2
 
 /* The GCC port might not emit a __register_frame_info symbol, which eventually
