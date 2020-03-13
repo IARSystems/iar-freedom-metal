@@ -10,10 +10,6 @@
 #include <metal/io.h>
 #include <metal/machine.h>
 
-#ifdef __ICCRISCV__
-#define __asm__ asm
-#endif
-
 unsigned long long
 __metal_clint0_mtime_get(struct __metal_driver_riscv_clint0 *clint) {
     __metal_io_u32 lo, hi;

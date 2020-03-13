@@ -4,11 +4,6 @@
 #include <metal/cache.h>
 #include <metal/machine.h>
 
-#ifdef __ICCRISCV__
-#define __asm__ asm
-#define __volatile__
-#endif
-
 /* Macros to generate driver prefix string */
 #ifdef METAL_CACHE_DRIVER_PREFIX
 #define METAL_CACHE_FUNC_STR(a, b) a##_##b
