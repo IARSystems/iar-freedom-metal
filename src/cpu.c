@@ -14,11 +14,7 @@ struct metal_cpu* metal_cpu_get(unsigned int hartid) {
 int metal_cpu_get_current_hartid() {
 #ifdef __riscv
     int mhartid;
-<<<<<<< HEAD
-    __asm__ volatile("csrr %0, mhartid" : "=r"(mhartid));
-=======
-    __asm volatile("csrr %0, mhartid" : "=r" (mhartid));
->>>>>>> 6877c65 (Prel attempt to convert gcc stuff with alignment)
+    __asm volatile("csrr %0, mhartid" : "=r"(mhartid));
     return mhartid;
 #endif
 }
