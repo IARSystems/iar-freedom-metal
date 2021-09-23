@@ -5,9 +5,6 @@
 #define METAL__TIME_H
 
 #include <time.h>
-#ifndef __SEGGER_LIBC__
-#include <sys/time.h>
-#endif
 
 #ifdef __ICCRISCV__
 /* This definitions are not part of standard C and
@@ -26,6 +23,10 @@ struct timeval {
 	time_t		tv_sec;		/* seconds */
 	suseconds_t	tv_usec;	/* and microseconds */
 };
+#else
+#ifndef __SEGGER_LIBC__
+#include <sys/time.h>
+#endif
 #endif
 
 /*!

@@ -1,16 +1,16 @@
 /* Copyright 2018 SiFive, Inc */
 /* SPDX-License-Identifier: Apache-2.0 */
 
-#ifndef __IAR_SYSTEMS_ICC__
-#include <sys/time.h>
-#include <sys/times.h>
-#endif
 #include <metal/cpu.h>
 #include <metal/machine.h>
 #include <metal/timer.h>
+#ifdef __ICCRISCV__
+#include <time.h>
+#else
 #ifndef __SEGGER_LIBC__
 #include <sys/time.h>
 #include <sys/times.h>
+#endif
 #endif
 
 #if defined(__METAL_DT_MAX_HARTS)
