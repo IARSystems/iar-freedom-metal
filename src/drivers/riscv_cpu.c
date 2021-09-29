@@ -400,6 +400,7 @@ metal_vector_mode __metal_controller_interrupt_vector_mode(void) {
 void __metal_controller_interrupt_vector(metal_vector_mode mode,
                                          void *vec_table) {
     uintptr_t trap_entry, val;
+    
     __asm__ volatile("csrr %0, mtvec" : "=r"(val));
     val &= ~(METAL_MTVEC_CLIC_VECTORED | METAL_MTVEC_CLIC_RESERVED);
     trap_entry = (uintptr_t)vec_table;
@@ -414,6 +415,7 @@ void __metal_controller_interrupt_vector(metal_vector_mode mode,
         __asm__ volatile("csrw 0x307, %0" ::"r"(trap_entry));
         __asm__ volatile(
             "csrw mtvec, %0" ::"r"(val | METAL_MTVEC_CLIC_VECTORED));
+        break;
     case METAL_VECTOR_MODE:
         __asm__ volatile(
             "csrw mtvec, %0" ::"r"(trap_entry | METAL_MTVEC_VECTORED));
