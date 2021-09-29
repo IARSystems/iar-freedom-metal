@@ -3,7 +3,6 @@
 
 #include <metal/machine.h>
 #ifdef __METAL_DT_MAX_WDOGS
-
 #include <metal/watchdog.h>
 
 extern inline int metal_watchdog_feed(const struct metal_watchdog *const wdog);

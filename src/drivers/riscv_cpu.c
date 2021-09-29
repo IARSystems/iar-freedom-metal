@@ -6,7 +6,6 @@
 #include <metal/shutdown.h>
 #include <stdint.h>
 
-
 #define __METAL_IRQ_VECTOR_HANDLER(id)                                         \
     void *priv;                                                                \
     struct __metal_driver_riscv_cpu_intc *intc;                                \
@@ -143,7 +142,7 @@ void __metal_default_sw_handler(int id, void *priv) {
     struct __metal_driver_riscv_cpu_intc *intc;
     struct __metal_driver_cpu *cpu = __metal_cpu_table[__metal_myhart_id()];
 
-    __asm__ volatile("csrr %0, mcause" : "=r"(mcause));   
+    __asm__ volatile("csrr %0, mcause" : "=r"(mcause));
     if (cpu) {
         intc = (struct __metal_driver_riscv_cpu_intc *)
             __metal_driver_cpu_interrupt_controller((struct metal_cpu *)cpu);
@@ -217,13 +216,13 @@ __interrupt void __metal_exception_handler (void) {
                 return;
             }
             if ((mtvec & METAL_MTVEC_MASK) == METAL_MTVEC_CLIC) {
-    		    uintptr_t mtvt;
-    		    metal_interrupt_handler_t mtvt_handler;
+                uintptr_t mtvt;
+                metal_interrupt_handler_t mtvt_handler;
                 __asm__ volatile("csrr %0, 0x307" : "=r"(mtvt));
                	priv = intc->metal_int_table[METAL_INTERRUPT_ID_SW].sub_int;
                	mtvt_handler = (metal_interrupt_handler_t) * (uintptr_t *)mtvt;
                	mtvt_handler(id, priv);
-		        return;
+                return;
             }
         } else {
             intc->metal_exception_table[id]((struct metal_cpu *)cpu, id);
@@ -408,20 +407,20 @@ void __metal_controller_interrupt_vector(metal_vector_mode mode,
     switch (mode) {
     case METAL_SELECTIVE_NONVECTOR_MODE:
     case METAL_SELECTIVE_VECTOR_MODE:
-        __asm__ volatile("csrw 0x307, %0" :: "r"(trap_entry));
-        __asm__ volatile("csrw mtvec, %0" :: "r"(val | METAL_MTVEC_CLIC));
+        __asm__ volatile("csrw 0x307, %0" ::"r"(trap_entry));
+        __asm__ volatile("csrw mtvec, %0" ::"r"(val | METAL_MTVEC_CLIC));
         break;
     case METAL_HARDWARE_VECTOR_MODE:
-        __asm__ volatile("csrw 0x307, %0" :: "r"(trap_entry));
+        __asm__ volatile("csrw 0x307, %0" ::"r"(trap_entry));
         __asm__ volatile(
-            "csrw mtvec, %0" :: "r"(val | METAL_MTVEC_CLIC_VECTORED));
+            "csrw mtvec, %0" ::"r"(val | METAL_MTVEC_CLIC_VECTORED));
     case METAL_VECTOR_MODE:
         __asm__ volatile(
-            "csrw mtvec, %0" :: "r"(trap_entry | METAL_MTVEC_VECTORED)); 
+            "csrw mtvec, %0" ::"r"(trap_entry | METAL_MTVEC_VECTORED));
         break;
     case METAL_DIRECT_MODE:
         __asm__ volatile(
-            "csrw mtvec, %0" :: "r"(trap_entry & ~METAL_MTVEC_CLIC_VECTORED));
+            "csrw mtvec, %0" ::"r"(trap_entry & ~METAL_MTVEC_CLIC_VECTORED));
         break;
     }
 }
@@ -909,8 +908,8 @@ uintptr_t __metal_driver_cpu_get_exception_pc(struct metal_cpu *cpu) {
     return mepc;
 }
 
-int  __metal_driver_cpu_set_exception_pc(struct metal_cpu *cpu, uintptr_t mepc) {
-    __asm__ volatile("csrw mepc, %0" :: "r"(mepc));
+int __metal_driver_cpu_set_exception_pc(struct metal_cpu *cpu, uintptr_t mepc) {
+    __asm__ volatile("csrw mepc, %0" ::"r"(mepc));
     return 0;
 }
 

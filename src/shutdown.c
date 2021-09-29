@@ -16,7 +16,7 @@ void metal_shutdown(int code) {
     "There is no defined shutdown mechanism, metal_shutdown() will spin.")
 void metal_shutdown(int code) {
     while (1) {
-      __asm__ volatile ("nop");
+        __asm__ volatile("nop");
     }
 }
 #endif

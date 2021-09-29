@@ -4,7 +4,7 @@
 #include <metal/cpu.h>
 #include <metal/machine.h>
 
-struct metal_cpu* metal_cpu_get(unsigned int hartid) {
+struct metal_cpu *metal_cpu_get(unsigned int hartid) {
     if (hartid < __METAL_DT_MAX_HARTS) {
         return (struct metal_cpu *)__metal_cpu_table[hartid];
     }
@@ -14,7 +14,7 @@ struct metal_cpu* metal_cpu_get(unsigned int hartid) {
 int metal_cpu_get_current_hartid() {
 #ifdef __riscv
     int mhartid;
-    __asm volatile("csrr %0, mhartid" : "=r"(mhartid));
+    __asm__ volatile("csrr %0, mhartid" : "=r"(mhartid));
     return mhartid;
 #endif
 }

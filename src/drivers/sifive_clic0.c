@@ -29,15 +29,14 @@ const struct __metal_clic_cfg __metal_clic_defaultcfg = {
 
 void __metal_clic0_handler(int id, void *priv) __attribute__((aligned(64)));
 #ifndef __IAR_SYSTEMS_ICC__
-void __metal_clic0_default_vector_handler (void)
+void __metal_clic0_default_vector_handler(void)
     __attribute__((interrupt, aligned(64)));
 #else
 __interrupt void __metal_clic0_default_vector_handler (void);
 #endif
 struct __metal_clic_cfg
 __metal_clic0_configuration(struct __metal_driver_sifive_clic0 *clic,
-                            struct __metal_clic_cfg *cfg)
-{
+                            struct __metal_clic_cfg *cfg) {
     volatile unsigned char val;
     struct __metal_clic_cfg cliccfg;
     unsigned long control_base = __metal_driver_sifive_clic0_control_base(
