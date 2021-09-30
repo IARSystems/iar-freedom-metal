@@ -207,9 +207,9 @@ l3:
 #else
     addi    t0, x0, 8
 l1:
-    blt     a1, t0, 2f
+    blt     a1, t0, l2
     andi    a2, a0, 7
-    beqz    a2, 3f
+    beqz    a2, l3
 l2:
     sb      x0, 0(a0)
     addi    a0, a0, 1
