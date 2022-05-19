@@ -245,8 +245,8 @@ int __metal_clic0_interrupt_enable(struct __metal_driver_sifive_clic0 *clic,
                                    int id) {
     unsigned long control_base = __metal_driver_sifive_clic0_control_base(
         (struct metal_interrupt *)clic);
-    int num_subinterrupts = __metal_driver_sifive_clic0_num_subinterrupts(
-        (struct metal_interrupt *)clic);
+    // int num_subinterrupts = __metal_driver_sifive_clic0_num_subinterrupts(
+    //    (struct metal_interrupt *)clic);
 
     __METAL_ACCESS_ONCE(
         (__metal_io_u8 *)(control_base + METAL_SIFIVE_CLIC0_MMODE_APERTURE +
@@ -259,8 +259,8 @@ int __metal_clic0_interrupt_disable(struct __metal_driver_sifive_clic0 *clic,
                                     int id) {
     unsigned long control_base = __metal_driver_sifive_clic0_control_base(
         (struct metal_interrupt *)clic);
-    int num_subinterrupts = __metal_driver_sifive_clic0_num_subinterrupts(
-        (struct metal_interrupt *)clic);
+    // int num_subinterrupts = __metal_driver_sifive_clic0_num_subinterrupts(
+    //    (struct metal_interrupt *)clic);
 
     __METAL_ACCESS_ONCE(
         (__metal_io_u8 *)(control_base + METAL_SIFIVE_CLIC0_MMODE_APERTURE +
@@ -498,11 +498,8 @@ void __metal_driver_sifive_clic0_init(struct metal_interrupt *controller) {
         level = (1 << cfg.nlbits) - 1;
         num_subinterrupts =
             __metal_driver_sifive_clic0_num_subinterrupts(controller);
-        clic->metal_mtvt_table[0] = 
-#ifdef __IAR_SYSTEMS_ICC__
-(metal_interrupt_vector_handler_t)
-#endif
-            &__metal_clic0_handler;
+        clic->metal_mtvt_table[0] =
+            (metal_interrupt_vector_handler_t)&__metal_clic0_handler;
         __metal_clic0_interrupt_disable(clic, 0);
         __metal_clic0_interrupt_set_level(clic, 0, level);
         for (int i = 1; i < CLIC0_MAX_INTERRUPTS; i++) {
@@ -567,8 +564,8 @@ int __metal_driver_sifive_clic0_vector_register(
     int rc = -1;
     struct __metal_driver_sifive_clic0 *clic =
         (struct __metal_driver_sifive_clic0 *)(controller);
-    struct metal_interrupt *intc =
-        __metal_driver_sifive_clic0_interrupt_parent(controller);
+    // struct metal_interrupt *intc =
+    //    __metal_driver_sifive_clic0_interrupt_parent(controller);
     int num_subinterrupts =
         __metal_driver_sifive_clic0_num_subinterrupts(controller);
     metal_vector_mode mode = __metal_clic0_configure_get_vector_mode(clic);
